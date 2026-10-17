@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Edugame Khulafaurrasyidin</title>
+<style>
+:root{--bg:#f6f1e3;--card:#fff;--ink:#1d2b2a;--mut:#4a5a58;--pri:#0f6b5c;--pri2:#0a4f44;--gold:#c8961e;--ok:#157347;--bad:#b3402f;--line:#d9cfb4;--on:#fff;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;--bg:#10201d;--card:#1a302c;--ink:#f3eedd;--mut:#c4ccc6;--pri:#3cb39d;--pri2:#2a8d7a;--gold:#e8b94a;--ok:#5cd08f;--bad:#ff8f7d;--line:#33504a;--on:#06201b}}
+:root[data-theme="dark"]{color-scheme:dark;--bg:#10201d;--card:#1a302c;--ink:#f3eedd;--mut:#c4ccc6;--pri:#3cb39d;--pri2:#2a8d7a;--gold:#e8b94a;--ok:#5cd08f;--bad:#ff8f7d;--line:#33504a;--on:#06201b}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:18px/1.55 system-ui,"Segoe UI",Roboto,sans-serif;min-height:100vh}
+body.big{font-size:21px}
+body.calm *{animation:none!important;transition:none!important}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+header{display:flex;gap:8px;justify-content:space-between;align-items:center;padding:10px 14px;background:var(--pri2);color:#fff;flex-wrap:wrap}
+header b{font-size:1rem}
+.tools button{background:transparent;color:#fff;border:1px solid #ffffff88;border-radius:20px;padding:4px 12px;margin-left:4px;font-size:.8rem;cursor:pointer}
+.tools button[aria-pressed=true]{background:#fff;color:#0a4f44}
+main{max-width:820px;margin:0 auto;padding:16px}
+.card{background:var(--card);border:2px solid var(--line);border-radius:22px;padding:20px;margin-bottom:14px}
+h1,h2,h3{line-height:1.25;margin:.2em 0 .5em}
+h1{font-size:1.9rem;color:var(--pri);text-align:center}
+.hero{text-align:center;font-size:3.4rem}
+.ar{font-size:1.7rem;text-align:center;color:var(--gold);direction:rtl}
+.btn{display:block;width:100%;max-width:340px;margin:10px auto;padding:14px 18px;font-size:1.05rem;font-weight:700;border-radius:18px;border:0;background:var(--pri);color:var(--on);cursor:pointer;min-height:52px}
+.btn.alt{background:transparent;color:var(--pri);border:2px solid var(--pri)}
+.btn:focus-visible,.chip:focus-visible,.slot:focus-visible,.lv:focus-visible{outline:4px solid var(--gold);outline-offset:2px}
+.hidden{display:none!important}
+.map{display:grid;gap:10px}
+.lv{display:flex;gap:12px;align-items:center;text-align:left;width:100%;padding:12px 14px;border-radius:18px;border:2px solid var(--line);background:var(--card);color:var(--ink);font:inherit;cursor:pointer}
+.lv[disabled]{opacity:.55;cursor:not-allowed}
+.lv .n{flex:none;width:42px;height:42px;border-radius:50%;background:var(--pri);color:var(--on);display:grid;place-items:center;font-weight:800}
+.lv small{display:block;color:var(--mut)}
+.bar{height:12px;background:var(--line);border-radius:8px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--gold);width:0;transition:width .4s}
+.meta{display:flex;justify-content:space-between;font-size:.9rem;color:var(--mut);margin-bottom:6px;flex-wrap:wrap;gap:4px}
+.q{font-size:1.15rem;font-weight:600}
+.slot{min-height:64px;border:3px dashed var(--pri);border-radius:18px;margin:14px 0;display:grid;place-items:center;padding:8px;color:var(--mut);text-align:center}
+.slot.over{background:#c8961e22}
+.slot.ok{border-style:solid;border-color:var(--ok);color:var(--ok);font-weight:700}
+.chips{display:grid;gap:10px}
+.chip{padding:14px;border-radius:16px;border:2px solid var(--pri);background:var(--card);color:var(--ink);font:inherit;font-weight:600;cursor:grab;text-align:center;min-height:54px}
+.chip.sel{background:var(--pri);color:var(--on)}
+.chip[disabled]{opacity:.4;cursor:not-allowed;text-decoration:line-through}
+.fb{border-radius:16px;padding:12px 14px;margin-top:12px}
+.fb.ok{background:#15734720;border:2px solid var(--ok)}
+.fb.no{background:#b3402f20;border:2px solid var(--bad)}
+.fb.hint{background:#c8961e25;border:2px solid var(--gold)}
+.stars{font-size:2rem;text-align:center;letter-spacing:4px}
+.skill{display:flex;align-items:center;gap:8px;margin:8px 0;font-size:.95rem}
+.skill .bar{flex:1}
+textarea{width:100%;min-height:80px;border-radius:12px;border:2px solid var(--line);padding:10px;font:inherit;background:var(--bg);color:var(--ink)}
+.badges{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+.badge{background:var(--gold);color:#241a00;border-radius:20px;padding:4px 12px;font-weight:700;font-size:.85rem}
+.note{font-size:.88rem;color:var(--mut)}
+@media(min-width:640px){.chips{grid-template-columns:repeat(3,1fr)}}
+</style>
+</head>
+<body>
+<header>
+ <b>🕌 Edugame Khulafaurrasyidin</b>
+ <span class="tools"><button id="tBig" aria-pressed="false">Teks besar</button><button id="tCalm" aria-pressed="false">Kurangi gerak</button></span>
+</header>
+<main id="app" aria-live="polite"></main>
+
+<script>
+/* ===== DATA SOAL (kunci = indeks opsi benar di field a; kunci baru terlihat setelah murid menjawab) =====
+   tp: 1 nasab&gelar, 2 dakwah, 3 jasa, 5 keteladanan. Sumber: Buku PAI Kelas VI Bab 5 (Kemendikbudristek 2022). */
+const LEVELS=[
+{name:"Gerbang Nasab",badge:"🌟 Penjaga Nama",qs:[
+ {tp:1,q:"Sebelum memeluk Islam, Abu Bakar bernama ….",o:["Abdul Ka’bah","Abdullah","Abu Qahafah"],a:0,h:"Nama ‘Abdullah’ diberikan Rasulullah saw. setelah ia memeluk Islam.",w:"Nama Abu Bakar pada masa Jahiliyah adalah Abdul Ka’bah. Setelah Islam, Rasulullah saw. menamainya Abdullah."},
+ {tp:1,q:"Gelar al-Ṣiddiq bagi Abu Bakar artinya ….",o:["Sangat benar","Pembeda yang hak dan batil","Pemimpin orang beriman"],a:0,h:"Ia selalu membenarkan apa yang disampaikan Rasulullah saw.",w:"Al-Ṣiddiq berarti sangat benar. Al-Faruq adalah gelar Umar, Amirul Mukminin gelar Umar sebagai khalifah."},
+ {tp:1,q:"Ibu Abu Bakar bernama ….",o:["Hantamah","Umi al-Khair","Khadijah"],a:1,h:"Namanya semula Salma binti Ṣakhir bin Amir.",w:"Ibu Abu Bakar adalah Umi al-Khair. Hantamah adalah ibu Umar bin Khattab."}]},
+{name:"Lembah Dakwah",badge:"🛡️ Sahabat Setia",qs:[
+ {tp:2,q:"Orang-orang ragu pada peristiwa Isrā Mi’raj. Abu Bakar justru ….",o:["Ikut ragu","Membenarkan Nabi saw.","Diam saja"],a:1,h:"Dari sinilah ia dijuluki al-Ṣiddiq.",w:"Abu Bakar langsung membenarkan: jika Nabi yang mengatakannya, pasti benar."},
+ {tp:2,q:"Dengan hartanya, Abu Bakar memerdekakan budak yang disiksa karena Islam, salah satunya ….",o:["Zaid bin Ṡabit","Bilal","Usamah bin Zaid"],a:1,h:"Ia dikenal sebagai muazin pertama; lihat Gambar 5.2.",w:"Abu Bakar memerdekakan Bilal, Ammar, dan Zunairah."},
+ {tp:2,q:"Saat Rasulullah saw. wafat dan kaum muslimin bersedih, Abu Bakar menenangkan mereka dengan mengingatkan bahwa ….",o:["Muhammad tidak akan wafat","Allah Maha Hidup dan tidak meninggal","Tidak perlu sedih"],a:1,h:"Ia membacakan Q.S. Ali ‘Imran/3: 144.",w:"Abu Bakar menguatkan iman: yang disembah adalah Allah yang Maha Hidup."}]},
+{name:"Istana Khalifah Pertama",badge:"📜 Penjaga Mushaf",qs:[
+ {tp:3,q:"Abu Bakar diangkat menjadi khalifah melalui ….",o:["Perang","Musyawarah Ansar dan Muhajirin","Menunjuk diri sendiri"],a:1,h:"Mereka berkumpul di Saqifah Bani Sa’idah.",w:"Para sahabat bermusyawarah lalu sepakat membaiat Abu Bakar."},
+ {tp:3,q:"Khalifah Abu Bakar menugaskan siapa untuk mengumpulkan Al-Qur’an?",o:["Zaid bin Ṡabit","Usamah bin Zaid","Ali bin Abi Ṭalib"],a:0,h:"Usul pengumpulan datang dari Umar setelah banyak penghafal gugur di Yamamah.",w:"Zaid bin Ṡabit mengumpulkan ayat dari pelepah kurma, tulang, kulit, batu, dan hafalan sahabat."},
+ {tp:3,q:"Abu Bakar tegas kepada orang yang menolak zakat karena ….",o:["Zakat boleh dipilih-pilih","Zakat adalah hak harta dan tidak dipisahkan dari salat","Zakat hanya untuk orang kaya raya"],a:1,h:"Salat dan zakat sama-sama kewajiban.",w:"Abu Bakar menegakkan syariat: kewajiban salat tidak dipisahkan dari zakat."}]},
+{name:"Kota Sang Al-Faruq",badge:"⚖️ Pembeda Benar-Salah",qs:[
+ {tp:1,q:"Gelar al-Faruq bagi Umar bin Khattab artinya ….",o:["Yang membedakan yang hak dan batil","Yang sangat benar","Yang menjamin dakwah"],a:0,h:"Gelar ini diberikan setelah Umar masuk Islam.",w:"Al-Faruq berarti pembeda yang hak dan batil (benar dan salah)."},
+ {tp:3,q:"Umar bin Khattab menjadi khalifah selama ….",o:["2 tahun","10 tahun","13 tahun"],a:1,h:"Abu Bakar menjabat sekitar 2 tahun.",w:"Umar menjadi khalifah selama 10 tahun."},
+ {tp:3,q:"Kalender Hijriyah yang dicetuskan Umar dimulai dari ….",o:["Kelahiran Nabi saw.","Hijrah Nabi dari Makkah ke Madinah","Wafatnya Nabi saw."],a:1,h:"Bulan pertamanya Muḥarram.",w:"Penanggalan Hijriyah dihitung dari hijrah Nabi saw. dari Makkah ke Madinah."}]},
+{name:"Taman Keteladanan",badge:"💚 Teladan Cilik",qs:[
+ {tp:3,q:"Umar mewajibkan pejabat mendaftarkan kekayaannya. Di Indonesia, gagasan ini mirip ….",o:["Laporan harta kekayaan calon pejabat","Membangun gedung kantor","Lomba pidato"],a:0,h:"Tujuannya mencegah korupsi dan penyalahgunaan wewenang.",w:"Pendataan harta pejabat dilakukan agar tidak terjadi korupsi."},
+ {tp:5,q:"Kelompokmu berbeda pendapat saat tugas. Meneladani Abu Bakar yang menjaga persatuan, kamu ….",o:["Bermusyawarah sampai sepakat","Memaksakan pendapatmu","Keluar dari kelompok"],a:0,h:"Allah memerintahkan musyawarah (Q.S. Ali ‘Imran/3: 159).",w:"Persatuan dijaga dengan musyawarah dan saling mendengar."},
+ {tp:5,q:"Umar mengakui pendapat seorang perempuan yang benar. Teladan untukmu ….",o:["Mengakui pendapat teman yang benar dengan rendah hati","Selalu merasa paling benar","Menertawakan teman yang keliru"],a:0,h:"Umar berkata: ‘Perempuan itu benar dan Umar yang salah.’",w:"Berani mengakui kebenaran dan menghargai pendapat orang lain adalah akhlak mulia."}]}
+];
+const TPN={1:"Nasab & gelar",2:"Dakwah",3:"Jasa-jasa",5:"Keteladanan"};
+const app=document.getElementById("app");
+let S;
+function fresh(){S={lv:0,qi:0,score:0,stars:[],unlocked:1,res:[],tries:0,done:false,sel:null,order:[],opts:[],refl:["",""]}}
+fresh();
+const shuf=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+const esc=s=>String(s).replace(/[&<>]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]));
+const total=()=>LEVELS.reduce((n,l)=>n+l.qs.length,0);
+function show(html){app.innerHTML=html;window.scrollTo(0,0);const h=app.querySelector("h1,h2");if(h){h.tabIndex=-1;h.focus({preventScroll:true})}}
+function on(id,fn){const e=document.getElementById(id);if(e)e.onclick=fn}
+
+function title(){show(`<div class="card"><div class="hero" aria-hidden="true">🕌🌙⭐</div><h1>Edugame Khulafaurrasyidin</h1>
+<p class="ar" aria-hidden="true">بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ</p>
+<p style="text-align:center">PAI dan Budi Pekerti · Kelas VI · Bab 5: Jasa Khulafaurrasyidin untuk Dunia</p>
+<button class="btn" id="go">▶ Mulai</button><button class="btn alt" id="how">Petunjuk</button><button class="btn alt" id="aim">Tujuan Belajar</button></div>`);
+ on("go",story);on("how",howto);on("aim",aims)}
+function howto(){show(`<div class="card"><h2>Petunjuk</h2><ol><li>Baca pertanyaan, lalu <b>seret kartu jawaban</b> ke kotak putus-putus.</li><li>Di ponsel atau keyboard: <b>ketuk kartu</b>, lalu ketuk kotaknya.</li><li>Jika belum tepat, kamu mendapat petunjuk dan boleh mencoba lagi.</li><li>Selesaikan 5 level untuk mendapat bintang dan lencana.</li></ol>
+<p class="note">Skor permainan bukan satu-satunya ukuran kemampuanmu. Salah itu bagian dari belajar!</p><button class="btn" id="b">Kembali</button></div>`);on("b",title)}
+function aims(){show(`<div class="card"><h2>Tujuan Belajar</h2><ol><li>Menyebutkan nasab dan gelar Abu Bakar dan Umar bin Khattab.</li><li>Menjelaskan dakwah keduanya.</li><li>Menjelaskan jasa-jasa keduanya.</li><li>Membuat paparan tentang jasa-jasa keduanya (lihat refleksi akhir).</li><li>Bersikap dan berkarakter dari keteladanan Khulafaurrasyidin.</li></ol><button class="btn" id="b">Kembali</button></div>`);on("b",title)}
+function story(){show(`<div class="card"><h2>Petualangan Dimulai 🗺️</h2><p>Setelah Rasulullah saw. wafat, kaum muslimin membutuhkan pemimpin yang jujur dan teguh. Ikutilah jejak Abu Bakar al-Ṣiddiq dan Umar bin Khattab melewati 5 tempat untuk mengumpulkan lencana keteladanan!</p><button class="btn" id="b">Buka Peta Misi</button></div>`);on("b",map)}
+function map(){const dn=S.stars.filter(x=>x!=null).length;
+ show(`<div class="card"><h2>Peta Misi</h2><div class="meta"><span>Level selesai: ${dn}/5</span><span>⭐ ${S.stars.reduce((a,b)=>a+(b||0),0)} · Skor ${S.score}</span></div><div class="bar"><i style="width:${dn*20}%"></i></div></div>
+ <div class="map">${LEVELS.map((l,i)=>`<button class="lv" data-i="${i}" ${i>=S.unlocked?"disabled":""}><span class="n">${i+1}</span><span><b>${l.name}</b><small>${S.stars[i]?"⭐".repeat(S.stars[i])+" "+l.badge:(i<S.unlocked?"Siap dimainkan":"🔒 Selesaikan level sebelumnya")}</small></span></button>`).join("")}</div>
+ ${dn===5?'<button class="btn" id="fin">Lihat Hasil</button>':""}<button class="btn alt" id="home">Beranda</button>`);
+ app.querySelectorAll(".lv").forEach(b=>b.onclick=()=>startLevel(+b.dataset.i));
+ on("fin",result);on("home",title)}
+function startLevel(i){S.lv=i;S.qi=0;S.order=shuf(LEVELS[i].qs.map((_,k)=>k));S.lvPts=0;S.res=S.res.filter(r=>r.lv!==i);S.score=S.res.reduce((a,r)=>a+r.pts,0);question()}
+function question(){
+ const L=LEVELS[S.lv],q=L.qs[S.order[S.qi]];S.tries=0;S.done=false;S.sel=null;S.opts=shuf(q.o.map((t,k)=>({t,k})));
+ show(`<div class="card"><div class="meta"><span>Level ${S.lv+1}: ${L.name}</span><span>Tantangan ${S.qi+1}/${L.qs.length}</span></div><div class="bar"><i style="width:${S.qi/L.qs.length*100}%"></i></div>
+ <h2 class="q">${esc(q.q)}</h2>
+ <div class="slot" id="slot" role="button" tabindex="0" aria-label="Kotak jawaban. Pilih kartu lalu ketuk kotak ini.">Seret jawaban ke sini</div>
+ <div class="chips" id="chips">${S.opts.map((o,j)=>`<button class="chip" draggable="true" data-j="${j}">${esc(o.t)}</button>`).join("")}</div>
+ <div id="fb"></div></div><button class="btn alt" id="mp">Kembali ke Peta</button>`);
+ const slot=document.getElementById("slot");
+ document.querySelectorAll(".chip").forEach(c=>{
+  c.onclick=()=>{if(S.done||c.disabled)return;document.querySelectorAll(".chip").forEach(x=>x.classList.remove("sel"));S.sel=+c.dataset.j;c.classList.add("sel");slot.textContent="Ketuk di sini untuk menaruh: "+S.opts[S.sel].t};
+  c.ondragstart=e=>{S.sel=+c.dataset.j;e.dataTransfer.setData("text/plain",c.dataset.j)}});
+ slot.ondragover=e=>{e.preventDefault();slot.classList.add("over")};
+ slot.ondragleave=()=>slot.classList.remove("over");
+ slot.ondrop=e=>{e.preventDefault();slot.classList.remove("over");S.sel=+e.dataTransfer.getData("text/plain");place()};
+ const act=()=>{if(S.sel==null){document.getElementById("fb").innerHTML='<div class="fb hint">Pilih satu kartu jawaban dulu ya.</div>';return}place()};
+ slot.onclick=act;slot.onkeydown=e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();act()}};
+ on("mp",map)}
+function place(){
+ if(S.done||S.sel==null)return;
+ const L=LEVELS[S.lv],q=L.qs[S.order[S.qi]],pick=S.opts[S.sel],slot=document.getElementById("slot"),fb=document.getElementById("fb");
+ S.tries++;
+ if(pick.k===q.a){const pts=S.tries===1?10:5;finish(q,pts,true);slot.textContent="✔ "+pick.t;slot.classList.add("ok");
+  fb.innerHTML=`<div class="fb ok"><b>Tepat! +${pts} poin.</b><br>${esc(q.w)}</div>`}
+ else if(S.tries<2){document.querySelector(`.chip[data-j="${S.sel}"]`).disabled=true;S.sel=null;document.querySelectorAll(".chip").forEach(x=>x.classList.remove("sel"));slot.textContent="Seret jawaban ke sini";
+  fb.innerHTML=`<div class="fb hint"><b>Belum tepat, ayo coba lagi!</b><br>💡 Petunjuk: ${esc(q.h)}</div>`}
+ else{finish(q,0,false);slot.textContent="Jawaban: "+q.o[q.a];slot.classList.add("ok");
+  fb.innerHTML=`<div class="fb no"><b>Tidak apa-apa, kita pelajari bersama.</b><br>Jawaban: <b>${esc(q.o[q.a])}</b>. ${esc(q.w)}</div>`}
+ if(S.done){const last=S.qi===L.qs.length-1;fb.innerHTML+=`<button class="btn" id="nx">${last?"Selesaikan Level":"Lanjut ➜"}</button>`;on("nx",()=>{if(last)endLevel();else{S.qi++;question()}});document.querySelectorAll(".chip").forEach(c=>c.disabled=true);document.getElementById("nx").focus()}
+}
+function finish(q,pts,ok){S.done=true;S.score+=pts;S.lvPts=(S.lvPts||0)+pts;S.res.push({lv:S.lv,tp:q.tp,pts,first:pts===10})}
+function endLevel(){const st=S.lvPts>=25?3:S.lvPts>=15?2:1;S.stars[S.lv]=st;if(S.unlocked<=S.lv+1)S.unlocked=Math.min(5,S.lv+2);
+ const L=LEVELS[S.lv];
+ show(`<div class="card"><h2>Level ${S.lv+1} Selesai! 🎉</h2><div class="stars" aria-label="${st} bintang">${"⭐".repeat(st)}</div><p style="text-align:center"><span class="badge">${L.badge}</span></p><p style="text-align:center">Poin level ini: ${S.lvPts} dari 30. Skor total: ${S.score}.</p><button class="btn" id="b">${S.lv===4?"Lihat Hasil":"Kembali ke Peta"}</button><button class="btn alt" id="r">Ulangi Level Ini</button></div>`);
+ on("b",()=>S.lv===4?result():map());on("r",()=>startLevel(S.lv))}
+function result(){
+ const max=total()*10,pct=Math.round(S.score/max*100);
+ const rows=Object.keys(TPN).map(t=>{const r=S.res.filter(x=>x.tp==t);const n=r.length,f=r.filter(x=>x.pts>0).length;return{t,n,f,p:n?Math.round(f/n*100):0}});
+ const strong=rows.filter(r=>r.p>=80).map(r=>TPN[r.t]),weak=rows.filter(r=>r.p<80).map(r=>TPN[r.t]);
+ show(`<div class="card"><h2>Hasil Petualanganmu</h2><div class="stars">${"⭐".repeat(S.stars.reduce((a,b)=>a+(b||0),0))}</div>
+ <p style="text-align:center"><b>Skor ${S.score} / ${max} (${pct}%)</b></p>
+ <div class="badges">${S.stars.map((s,i)=>s?`<span class="badge">${LEVELS[i].badge}</span>`:"").join("")}</div>
+ <h3>Ketercapaian tujuan belajar</h3>${rows.map(r=>`<div class="skill"><span style="width:120px">${TPN[r.t]}</span><div class="bar"><i style="width:${r.p}%"></i></div><span>${r.p}%</span></div>`).join("")}
+ <p>💪 Sudah kuat: ${strong.length?strong.join(", "):"terus berlatih, kamu hebat sudah mencoba!"}</p>
+ <p>📖 Perlu dibaca lagi di buku: ${weak.length?weak.join(", "):"semua sudah baik, mantap!"}</p>
+ <p class="note">Skor permainan bukan satu-satunya ukuran kemampuanmu. Tujuan 4 (membuat paparan) dinilai gurumu lewat Unjuk Kerja: buat paparan jasa Abu Bakar dan Umar di karton atau slide.</p>
+ <button class="btn" id="rf">Tulis Refleksi</button><button class="btn alt" id="again">Main Ulang</button></div>`);
+ on("rf",reflect);on("again",()=>{fresh();map()})}
+function reflect(){show(`<div class="card"><h2>Refleksi</h2>
+ <label for="r1"><b>Apa hal baru yang kamu pelajari?</b></label><textarea id="r1" maxlength="500">${esc(S.refl[0])}</textarea>
+ <label for="r2"><b>Bagaimana menerapkannya dalam kehidupan sehari-hari?</b></label><textarea id="r2" maxlength="500">${esc(S.refl[1])}</textarea>
+ <p class="note">Tulisanmu hanya tampil di layar ini dan tidak dikirim atau disimpan. Jangan menulis data pribadi.</p>
+ <div id="msg" role="status"></div><button class="btn" id="sv">Selesai</button><button class="btn alt" id="bk">Kembali ke Hasil</button></div>`);
+ on("bk",()=>{S.refl=[r1.value,r2.value];result()});
+ on("sv",()=>{if(!r1.value.trim()||!r2.value.trim()){msg.innerHTML='<div class="fb hint">Isi kedua refleksi dulu ya, satu kalimat pendek juga boleh.</div>';return}
+  S.refl=[r1.value,r2.value];show(`<div class="card"><h2>Barakallahu fiik! 🌙</h2><p>Terima kasih sudah belajar. Semoga kamu meneladani kejujuran Abu Bakar dan keberanian Umar dalam keseharian.</p><button class="btn" id="a">Main Ulang</button><button class="btn alt" id="h">Beranda</button></div>`);on("a",()=>{fresh();map()});on("h",()=>{fresh();title()})})}
+
+/* Aksesibilitas */
+const tb=document.getElementById("tBig"),tc=document.getElementById("tCalm");
+tb.onclick=()=>{document.body.classList.toggle("big");tb.setAttribute("aria-pressed",document.body.classList.contains("big"))};
+tc.onclick=()=>{document.body.classList.toggle("calm");tc.setAttribute("aria-pressed",document.body.classList.contains("calm"))};
+title();
+</script>
+</body>
+</html>
